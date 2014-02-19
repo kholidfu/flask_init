@@ -1,19 +1,20 @@
 # author: @sopier
 from flask import render_template, request, redirect, send_from_directory
 from flask import make_response # untuk sitemap
+from flask import jsonify
 from app import app
 # untuk find_one based on data id => db.freewaredata.find_one({'_id': ObjectId(file_id)})
 # atom feed
 from werkzeug.contrib.atom import AtomFeed
-from bson.objectid import ObjectId 
+from bson.objectid import ObjectId
 from filters import slugify
 import datetime
 
 
 @app.template_filter()
 def slug(s):
-    """ 
-    transform words into slug 
+    """
+    transform words into slug
     usage: {{ string|slug }}
     """
     return slugify(s)
@@ -40,7 +41,7 @@ def sitemap():
 
 @app.route('/recent.atom')
 def recent_feed():
-    # http://werkzeug.pocoo.org/docs/contrib/atom/ 
+    # http://werkzeug.pocoo.org/docs/contrib/atom/
     # wajibun: id(link) dan updated
     # feed = AtomFeed('Recent Articles',
     #                feed_url = request.url, url=request.url_root)
