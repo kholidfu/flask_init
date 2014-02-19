@@ -1,5 +1,4 @@
 # author: @sopier
-
 from flask import render_template, request, redirect, send_from_directory
 from flask import make_response # untuk sitemap
 from app import app
@@ -7,9 +6,9 @@ from app import app
 # atom feed
 from werkzeug.contrib.atom import AtomFeed
 from bson.objectid import ObjectId 
-from filters import slugify, splitter, onlychars, get_first_part, get_last_part, formattime, cleanurl
-
+from filters import slugify
 import datetime
+
 
 @app.template_filter()
 def slug(s):
@@ -18,54 +17,6 @@ def slug(s):
     usage: {{ string|slug }}
     """
     return slugify(s)
-
-@app.template_filter()
-def split(s):
-    """ 
-    split string s with delimiter '-' 
-    return list object
-    usage: {{ string|split }}
-    """
-    return splitter(s, '-')
-
-@app.template_filter()
-def getlast(text, delim=' '):
-    """
-    get last word from string with delimiter ' '
-    usage: {{ string|getlast }}
-    """
-    return get_last_part(text, delim)
-
-@app.template_filter()
-def getfirst(text, delim=' '):
-    """
-    get first word from string with delimiter '-'
-    usage: {{ string|getfirst }}
-    """
-    return get_first_part(text, delim)
-
-@app.template_filter()
-def getchars(text):
-    """
-    get characters and numbers only from string
-    usage: {{ string|getchars }}
-    """
-    return onlychars(text)
-
-@app.template_filter()
-def sectomins(seconds):
-    """
-    convert seconds to hh:mm:ss
-    usage: {{ seconds|sectomins }}
-    """
-    return formattime(seconds)
-
-@app.template_filter()
-def urlcleaner(text):
-    """
-    clean url from string
-    """
-    return cleanurl(text)
 
 # handle robots.txt file
 @app.route("/robots.txt")
